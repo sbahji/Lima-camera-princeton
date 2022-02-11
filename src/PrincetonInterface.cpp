@@ -29,6 +29,7 @@
 #include "PrincetonSyncCtrlObj.h"
 #include "PrincetonBinCtrlObj.h"
 #include "PrincetonRoiCtrlObj.h"
+#include "PrincetonShutterCtrlObj.h"
 #include "PrincetonException.h"
 
 using namespace lima;
@@ -76,7 +77,8 @@ Interface::Interface(const std::string& camera_serial) :
   m_det_info(NULL),
   m_sync(NULL), 
   m_bin(NULL),
-  m_roi(NULL)
+  m_roi(NULL),
+  m_shutter(NULL)
 {
   DEB_CONSTRUCTOR();
   m_pixel_stream = {NULL,0};
@@ -154,12 +156,14 @@ Interface::Interface(const std::string& camera_serial) :
   m_sync = new SyncCtrlObj(m_cam);
   m_bin = new BinCtrlObj(m_cam);
   m_roi = new RoiCtrlObj(m_cam,*m_bin);
-
+  m_shutter = new ShutterCtrlObj(m_cam);
+  
   // Cap list
   m_cap_list.push_back(HwCap(m_det_info));
   m_cap_list.push_back(HwCap(m_sync));
   //m_cap_list.push_back(HwCap(m_bin));
   //m_cap_list.push_back(HwCap(m_roi));
+  m_cap_list.push_back(HwCap(m_shutter));
   m_cap_list.push_back(HwCap(&m_buffer_ctrl_obj));
 }
 
@@ -171,7 +175,8 @@ Interface::~Interface()
   delete m_sync;
   delete m_bin;
   delete m_roi;
-
+  delete m_shutter;
+  
   unregister_user_pointer(m_cam);
   
   if(m_cam)

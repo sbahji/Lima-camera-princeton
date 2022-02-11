@@ -30,7 +30,7 @@ namespace Princeton
 #include <PrincetonInterface.h>
 %End
   public:
-    Interface(const std::string&);
+    Interface(const std::string& = "");
     virtual ~Interface();
 
     //- From HwInterface

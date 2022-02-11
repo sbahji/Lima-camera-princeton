@@ -40,7 +40,8 @@ namespace lima
     class SyncCtrlObj;
     class BinCtrlObj;
     class RoiCtrlObj;
-
+    class ShutterCtrlObj;
+    
     struct Process
     {
       unsigned int	id;
@@ -83,6 +84,8 @@ namespace lima
       SyncCtrlObj*		m_sync;
       BinCtrlObj*		m_bin;
       RoiCtrlObj*		m_roi;
+      ShutterCtrlObj*           m_shutter;
+      
       SoftBufferCtrlObj		m_buffer_ctrl_obj;
       CapList			m_cap_list;
 

@@ -92,7 +92,7 @@ class Princeton(PyTango.Device_4Impl):
 #==================================================================
     def __getattr__(self,name) :
         #use AttrHelper
-        return AttrHelper.get_attr_4u(self,name,_PrincetonCam)
+        return AttrHelper.get_attr_4u(self,name,_PrincetonInterface)
 
 
 #==================================================================
