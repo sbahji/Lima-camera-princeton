@@ -26,10 +26,10 @@
 #include <string>
 #include <list>
 
+#include "PrincetonCompatibility.h"
 #include <picam.h>
 #include <picam_advanced.h>
 
-#include <princeton_export.h>
 #include "lima/HwInterface.h"
 
 namespace lima

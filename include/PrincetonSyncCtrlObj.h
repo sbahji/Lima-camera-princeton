@@ -23,6 +23,8 @@
 #define PRINCETONSYNCCTRLOBJ_H
 #include <list>
 
+#include "PrincetonCompatibility.h"
+
 #include "lima/HwSyncCtrlObj.h"
 
 #include "PrincetonInterface.h"

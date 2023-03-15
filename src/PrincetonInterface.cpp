@@ -220,7 +220,7 @@ void Interface::prepareAcq()
 					     PicamParameter_ReadoutStride,
 					     &readoutStride));
   // - calculate the buffer size
-  pi64s readouts = std::ceil(std::max(3.*onlineReadoutRate,2.));
+  pi64s readouts = std::ceil((std::max)(3.*onlineReadoutRate,2.));
   long exp_bytes = readoutStride * readouts;
   if(exp_bytes != m_pixel_stream.memory_size)
     {

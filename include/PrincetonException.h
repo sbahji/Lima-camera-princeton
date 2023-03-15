@@ -43,8 +43,11 @@ void register_user_pointer(PicamHandle,void*);
 void unregister_user_pointer(PicamHandle);
 void* get_user_pointer(PicamHandle);
 
+//TODO SBA: remove comments
 #define CHECK_PICAM(status)				\
 if(status != PicamError_None) {					\
+  std::cout << "SBA - status = " << status << std::endl;
+  std::cout << "SBA - get_error_message(status) = " << get_error_message(status) << std::endl;
   THROW_HW_ERROR(Error) << get_error_message(status);		\
  }
 

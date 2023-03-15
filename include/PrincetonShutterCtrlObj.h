@@ -24,6 +24,7 @@
 #ifndef PRINCETONSHUTTER_H
 #define PRINCETONSHUTTER_H
 
+#include "PrincetonCompatibility.h"
 #include "lima/HwShutterCtrlObj.h"
 
 #include "PrincetonInterface.h"
