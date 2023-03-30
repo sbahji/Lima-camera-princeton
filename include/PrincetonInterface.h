@@ -58,6 +58,8 @@ namespace lima
     
     public:
       enum Status {Ready, Running, Fault};
+      enum TemperatureStatus {Temp_Fault,Temp_Locked,Temp_Unlocked};
+      enum GainType {Gain_Fault, Gain_Low, Gain_Medium, Gain_High};
 
       Interface(const std::string& camera_serial = "");
       virtual ~Interface();
@@ -68,11 +70,27 @@ namespace lima
       virtual void	startAcq();
       virtual void	stopAcq();
       virtual void	getStatus(StatusType& status);
-      virtual int       getNbHwAcquiredFrames();
+      virtual int	getNbHwAcquiredFrames();
 
 
-      void newFrameReady(const PicamAvailableData* available,
-			 const PicamAcquisitionStatus* status);
+      void newFrameReady(const PicamAvailableData* available, const PicamAcquisitionStatus* status);
+
+      //Temperature management - temperature attribute
+      float getSensorTemperature() const; ///< current sensor temperature
+      Interface::TemperatureStatus getSensorTemperatureStatus() const; ///< get regulation status
+
+      // Get/Set temperature setpoint regulation - temperatureTarget attribute
+      float getSensorTemperatureSetpoint() const;
+      void setSensorTemperatureSetpoint(float temp);
+
+      // gain attribute
+      Interface::GainType Interface::getAdcAnalogGain() const;
+      //void setAdcAnalogGain(int gain);
+      void setAdcAnalogGain(Interface::GainType gain);
+
+      //adcRate attribute
+      float getAdcSpeed();
+
     private:
       void _freePixelBuffer();
 

@@ -189,6 +189,7 @@ Interface::~Interface()
     Picam_UninitializeLibrary();
 
   _freePixelBuffer();
+
 }
 
 
@@ -353,6 +354,118 @@ void Interface::newFrameReady(const PicamAvailableData* available,
 	m_status = running ? Running : Ready;
     }
   m_cond.broadcast();
+}
+
+float Interface::getSensorTemperature() const
+{
+  DEB_MEMBER_FUNCT();
+  piflt sensor_temp;
+  CHECK_PICAM(Picam_GetParameterFloatingPointValue(m_cam,
+						   PicamParameter_SensorTemperatureReading,
+						   &sensor_temp));
+  return sensor_temp;
+}
+
+Interface::TemperatureStatus Interface::getSensorTemperatureStatus() const
+{
+  DEB_MEMBER_FUNCT();
+  piint status;
+  CHECK_PICAM(Picam_GetParameterIntegerValue(m_cam,
+					     PicamParameter_SensorTemperatureStatus,
+					     &status));
+  Interface::TemperatureStatus temp_status;
+  switch(status)
+    {
+    case PicamSensorTemperatureStatus_Locked:
+      temp_status = Interface::TemperatureStatus::Temp_Locked;break;
+    case PicamSensorTemperatureStatus_Unlocked:
+      temp_status = Interface::TemperatureStatus::Temp_Unlocked;break;
+    case PicamSensorTemperatureStatus_Faulted:
+    default:
+      temp_status = Interface::TemperatureStatus::Temp_Fault;break;
+    }
+  return temp_status;
+}
+
+float Interface::getSensorTemperatureSetpoint() const
+{
+  DEB_MEMBER_FUNCT();
+  piflt setpoint_temp;
+  CHECK_PICAM(Picam_GetParameterFloatingPointValue(m_cam,
+						   PicamParameter_SensorTemperatureSetPoint,
+						   &setpoint_temp));
+  return setpoint_temp;
+}
+
+void Interface::setSensorTemperatureSetpoint(float setpoint)
+{
+  DEB_MEMBER_FUNCT();
+  piflt setpoint_temp = setpoint;
+  CHECK_PICAM(Picam_SetParameterFloatingPointValue(m_cam,
+						   PicamParameter_SensorTemperatureSetPoint,
+						   setpoint_temp));
+}
+
+Interface::GainType Interface::getAdcAnalogGain() const
+{
+  DEB_MEMBER_FUNCT();
+  piint gain_type_temp;
+  CHECK_PICAM(Picam_GetParameterIntegerValue(m_cam,
+						   PicamParameter_AdcAnalogGain,
+						   &gain_type_temp));
+
+  Interface::GainType gain_type;
+
+	switch(gain_type_temp)
+	{
+		case PicamAdcAnalogGain_Low://1
+		  gain_type = Interface::GainType::Gain_Low;
+		  break;
+		case PicamAdcAnalogGain_Medium://2
+		  gain_type = Interface::GainType::Gain_Medium;
+		  break;
+		case PicamAdcAnalogGain_High://3
+		  gain_type = Interface::GainType::Gain_High;
+		  break;
+		default:
+		  gain_type = Interface::GainType::Gain_Fault;
+		  break;
+	}
+  return gain_type;
+}
+
+void Interface::setAdcAnalogGain(Interface::GainType gain)
+{
+  DEB_MEMBER_FUNCT();
+  piint gain_type_temp;
+
+	switch(gain)
+	{
+		case Gain_Low://1
+		  gain_type_temp = Interface::GainType::Gain_Low;
+		  break;
+		case Gain_Medium://2
+		  gain_type_temp = Interface::GainType::Gain_Medium;
+		  break;
+		case Gain_High://3
+		  gain_type_temp = Interface::GainType::Gain_High;
+		  break;
+	}
+
+  CHECK_PICAM(Picam_SetParameterIntegerValue(m_cam,
+						   PicamParameter_AdcAnalogGain,
+						   gain_type_temp));
+}
+
+//adcRate
+float Interface::getAdcSpeed()
+{
+  DEB_MEMBER_FUNCT();
+  piflt adcSpeed_temp;
+  CHECK_PICAM(Picam_GetParameterFloatingPointValue(m_cam,
+						   PicamParameter_AdcSpeed,
+						   &adcSpeed_temp));
+  return adcSpeed_temp;
 }
 
 void Interface::_freePixelBuffer()
