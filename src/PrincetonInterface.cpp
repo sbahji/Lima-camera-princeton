@@ -468,6 +468,15 @@ float Interface::getAdcSpeed()
   return adcSpeed_temp;
 }
 
+void Interface::setAdcSpeed(float adcSpeed)
+{
+  DEB_MEMBER_FUNCT();
+  piflt adcSpeed_temp = adcSpeed;
+  CHECK_PICAM(Picam_SetParameterFloatingPointValue(m_cam,
+						   PicamParameter_AdcSpeed,
+						   adcSpeed_temp));
+}
+
 void Interface::_freePixelBuffer()
 {
   if(m_pixel_stream.memory)

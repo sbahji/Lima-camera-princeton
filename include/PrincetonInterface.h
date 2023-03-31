@@ -90,6 +90,7 @@ namespace lima
 
       //adcRate attribute
       float getAdcSpeed();
+      void setAdcSpeed(float adcSpeed);
 
     private:
       void _freePixelBuffer();
