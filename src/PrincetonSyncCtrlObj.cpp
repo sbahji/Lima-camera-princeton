@@ -82,9 +82,11 @@ bool SyncCtrlObj::checkTrigMode(TrigMode mode)
       break;
     default:
       valid_mode = false;
-      for(auto trigger = m_trigger_capability.begin();
-	  !valid_mode && trigger != m_trigger_capability.end();++trigger)
-	valid_mode = *trigger == mode;
+      for(std::list<TrigMode>::iterator trigger = m_trigger_capability.begin();
+	    !valid_mode && trigger != m_trigger_capability.end();++trigger)
+        {
+		      valid_mode = *trigger == mode;
+        }
       break;
     }
   return valid_mode;

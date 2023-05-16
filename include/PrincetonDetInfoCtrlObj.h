@@ -22,9 +22,10 @@
 #ifndef PRINCETONDETINFO_H
 #define PRINCETONDETINFO_H
 
+#include "PrincetonCompatibility.h"
 #include <picam.h>
 
-#include <princeton_export.h>
+
 
 #include "lima/HwDetInfoCtrlObj.h"
 

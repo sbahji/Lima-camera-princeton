@@ -1,7 +1,7 @@
 //###########################################################################
 // This file is part of LImA, a Library for Image Acquisition
 //
-// Copyright (C) : 2009-2020
+// Copyright (C) : 2009-2011
 // European Synchrotron Radiation Facility
 // BP 220, Grenoble 38043
 // FRANCE
@@ -19,37 +19,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //###########################################################################
-#ifndef PRINCETONBINCTRLOBJ_H
-#define PRINCETONBINCTRLOBJ_H
+//
+// PrincetonCompatibility.h
+// Created on: March 02, 2023
+// Author: Arafat NOUREDDINE
 
-#include <list>
-#include <tuple>
+#ifndef PRINCETONCOMPATIBILITY_H
+#define PRINCETONCOMPATIBILITY_H
 
-#include "PrincetonCompatibility.h"
+#ifdef WIN32
+#ifdef LIBTELEDYNE_EXPORTS
+#define PRINCETON_EXPORT __declspec(dllexport)
+#else
+#define PRINCETON_EXPORT __declspec(dllimport)
+#endif
+#else  /* Unix */
+#define PRINCETON_EXPORT
+#endif
 
-#include "lima/HwBinCtrlObj.h"
-#include "PrincetonInterface.h"
-
-namespace lima
-{
-  namespace Princeton
-  {
-    class PRINCETON_EXPORT BinCtrlObj: public HwBinCtrlObj
-    {
-      DEB_CLASS_NAMESPC(DebModCamera,"BinCtrlObj","Princeton");
-    public:
-      BinCtrlObj(PicamHandle cam);
-      virtual ~BinCtrlObj();
-
-      virtual void setBin(const Bin& bin);
-      virtual void getBin(Bin& bin);
-      virtual void checkBin(Bin& bin);
-    private:
-      PicamHandle	m_cam;
-      Bin		m_bin;
-      std::list<int>	m_possible_xbin;
-      std::list<int>	m_possible_ybin;
-    };
-  }
-}
 #endif

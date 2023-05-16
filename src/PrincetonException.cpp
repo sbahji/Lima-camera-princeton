@@ -63,13 +63,15 @@ void register_user_pointer(PicamHandle handle,void* user_data)
 
 void unregister_user_pointer(PicamHandle handle)
 {
-  auto search = handle2_user_data.find(handle);
-  if(search != handle2_user_data.end())
-    handle2_user_data.erase(search);
+  std::map<PicamHandle,void*>::iterator search_iterator = handle2_user_data.find(handle);
+  if(search_iterator != handle2_user_data.end())
+  {
+    handle2_user_data.erase(search_iterator);
+  }
 }
 
 void* get_user_pointer(PicamHandle handle)
 {
-  auto search = handle2_user_data.find(handle);
-  return search != handle2_user_data.end() ? search->second : NULL;
+  std::map<PicamHandle,void*>::iterator search_iterator = handle2_user_data.find(handle);
+  return search_iterator != handle2_user_data.end() ? search_iterator->second : NULL;
 }

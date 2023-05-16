@@ -22,7 +22,7 @@
 #ifndef PRINCETONROICTRLOBJ_H
 #define PRINCETONROICTRLOBJ_H
 
-#include <princeton_export.h>
+#include "PrincetonCompatibility.h"
 
 #include "lima/HwRoiCtrlObj.h"
 #include "PrincetonDetInfoCtrlObj.h"

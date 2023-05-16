@@ -62,19 +62,24 @@ void BinCtrlObj::checkBin(Bin& bin)
   int request_ybin = bin.getY();
 
   if(!m_possible_xbin.empty())
+  {
+    for(std::list<int>::iterator poss_xbin = m_possible_xbin.begin();
+      poss_xbin != m_possible_xbin.end() && request_ybin >= *poss_xbin;
+      ++poss_xbin)
     {
-      for(auto poss_xbin = m_possible_xbin.begin();
-	  poss_xbin != m_possible_xbin.end() && request_ybin >= *poss_xbin;
-	  ++poss_xbin)
-	x_bin = *poss_xbin;
-    }
+      x_bin = *poss_xbin;
+    }	
+  }
 
-    if(!m_possible_ybin.empty())
-    {
-      for(auto poss_ybin = m_possible_ybin.begin();
-	  poss_ybin != m_possible_ybin.end() && request_ybin >= *poss_ybin;
-	  ++poss_ybin)
-	y_bin = *poss_ybin;
-    }
-    bin = Bin(x_bin,y_bin);
+  if(!m_possible_ybin.empty())
+  {
+    for(std::list<int>::iterator poss_ybin = m_possible_ybin.begin();
+      poss_ybin != m_possible_ybin.end() && request_ybin >= *poss_ybin;
+      ++poss_ybin)
+      {
+        y_bin = *poss_ybin;
+      }
+  }
+    
+  bin = Bin(x_bin,y_bin);
 }
